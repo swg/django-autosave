@@ -273,6 +273,13 @@ var DjangoAutosave = (window.DjangoAutosave) ? DjangoAutosave : {};
     };
 
     DjangoAutosave.save = function() {
+        if (typeof window.CKEDITOR !== 'undefined') {
+            // Update textarea elements before save
+            $.each(CKEDITOR.instances, function () {
+                this.updateElement();
+            });
+        }
+
         var existingData = DjangoAutosave.retrieve();
         var data = {
             formValues: DjangoAutosave.captureForm(),
